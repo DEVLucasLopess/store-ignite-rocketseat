@@ -9,14 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stitches/react": "^1.2.8",
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
+    "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
+    "keen-slider": "^6.8.6",
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "stripe": "^13.6.0",
     "typescript": "5.2.2"
   }
 }
