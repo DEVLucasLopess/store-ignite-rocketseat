@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useKeenSlider } from 'keen-slider/react'
 import 'keen-slider/keen-slider.min.css'
 
-import { format } from 'date-fns';
+import Link from 'next/link'
 
 import { priceFormatter } from '@/utils/formatter';
 
@@ -33,17 +33,21 @@ export default function Home({ products }: ProductsType) {
       <HomeContainer ref={sliderRef} className='keen-slider'>
         {products.map(productInfo => {
           return (
-            <Product key={productInfo.id} className='keen-slider__slide'>
-              <Image src={productInfo.imageUrl} width={520} height={480} alt="" />
-
-              <footer>
-                <strong>{productInfo.name}</strong>
-                <span>{priceFormatter.format(productInfo.price)}</span>
-              </footer>
-            </Product>
+            <div key={productInfo.id}>
+              <Link href={`/products/${productInfo.id}`} prefetch={false}>
+                <Product className='keen-slider__slide'>
+                  <Image src={productInfo.imageUrl} width={520} height={480} alt="" />
+            
+                  <footer>
+                    <strong>{productInfo.name}</strong>
+                    <span>{priceFormatter.format(productInfo.price)}</span>
+                  </footer>
+                </Product>
+              </Link>
+            </div>
           );
         })},
-        </HomeContainer>
+      </HomeContainer>
     </>
   )
 }
@@ -55,10 +59,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   const products = response.data.map(product => {
     const price = product.default_price as Stripe.Price
-
-    type priceType = {
-      price: number | null
-    }
 
     if (price !== null) {
       if (price.unit_amount !== null) {
